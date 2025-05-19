@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доставка еды ;%!?:*;!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='../css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='../css/profile.css') }}">
+</head>
+<body>
+
+    <!-- НАВИГАЦИЯ -->
+    <header>
+        <div>
+            <img src="../images/logo.jpg"
+                 alt=""
+                 height="60"
+                 width="60">
+            <p>Доставка Еды</p>
+        </div>
+        <div>
+            <p>{{ user.login }}</p>
+        </div>
+        <nav>
+            <a href="/tape/{{ user.user_id }}">Лента</a>
+            <a href="/basket/{{ user.user_id }}">Корзина</a>
+            <a href="/orders/{{ user.user_id }}">Заказы</a>
+            <a href="/exit/{{ user.user_id }}">Выход</a>
+        </nav>
+    </header>
+
+    <div class="div-1">
+        <div class="div-2">
+            <h1>Информация об аккаунте</h1>
+            <ul class="grid-container">
+                <li><p>Пользователь: {{ user.login }}</p></li>
+                <li><p>Права доступа: Пользователь</p></li>
+                <li><p>Пароль: {{ user.password }}</p></li>
+                <li><p>Телефон: {{ user.phone }}</p></li>
+            </ul>
+        </div>
+        <div class="div-3">
+            <h1>История заказов</h1>
+            <ul>
+                {% for order in orders %}
+                    <div class="div-4">
+                        <ul class="container">
+                            <li class="div-4-li-1">Номер заказа: {{ order.order_id }}</li>
+                            <li class="div-4-li">Адрес доставки: {{ order.address }}</li>
+                            <li class="div-4-li">Итоговая стоимость: {{ order.total_cost }}</li>
+                            <li class="div-4-li">Статус: {{ order.status }}</li>
+                        </ul>
+                    </div>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>

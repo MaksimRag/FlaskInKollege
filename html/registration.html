@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доставка еды ;%!?:*;!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='../css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='../css/registration.css') }}">
+</head>
+<body>
+    <div>
+        <p>Регистрация</p>
+    </div>
+    <div>
+        <p class="text-1">P.S. я солью в данные</p>
+        <form action="/user/registration/create" method="post">
+            <input name="login" type="text" placeholder="Логин">
+            <input name="password" type="text" placeholder="Пароль">
+            <input name="password_repid" type="text" placeholder="Повторите пароль">
+            <input name="phone" type="text" placeholder="Телефон">
+            <input type="submit" value="Далее">
+        </form>
+    </div>
+</body>
+</html>

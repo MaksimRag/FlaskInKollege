@@ -1,0 +1,97 @@
+/* НАВИГАЦИЯ */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #823803;
+    border-bottom: 5px solid #522708;
+    padding: 10px 20px;
+}
+
+header div {
+    display: flex;
+    align-items: center;
+}
+
+header div img {
+    border-radius: 50%;
+}
+
+header div p {
+    font-size: 34px;
+    margin-left: 15px;
+}
+
+header nav {
+    margin-right: 20px;
+}
+
+header nav a {
+    font-size: 28px;
+    color: #cf8551;
+    margin-left: 15px;
+    text-decoration: none;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+    color: #dda780;
+}
+
+/* ЛЕНТА ПО ЦЕНТРУ В 4 ТОВАРА */
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    margin-top: 80px;
+    margin-bottom: 80px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding-top: 20px;
+}
+
+.product-card {
+    width: calc(25% - 20px); /* 4 колонки + отступ */
+    box-sizing: border-box;
+    text-align: center;
+    background-color: #823803;
+    padding: 10px;
+    transition: transform 0.2s ease-in-out;
+    border-radius: 10px;
+    border: 5px solid #522708;
+}
+
+p.price {
+    color: #558a01;
+    font-weight: bold;
+}
+
+.product-image img {
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+input {
+    margin-top: 10px;
+    padding: 5px;
+    width: 80%;
+}
+
+input[type="submit"] {
+    font-family: “Comic Sans MS”, “Comic Sans”, cursive;
+    background-color: #522708;
+    color: #cf8551;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #dda780;
+}
+
+input[type="submit"]:active {
+    transform: scale(0.95);
+}

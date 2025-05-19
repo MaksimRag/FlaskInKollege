@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доставка еды ;%!?:*;!</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+
+    <!-- НАВИГАЦИЯ -->
+    <header>
+        <div>
+            <img src="../images/logo.jpg"
+                 alt=""
+                 height="60"
+                 width="60">
+            <p>Доставка Еды</p>
+        </div>
+        <div>
+            <p>{{ user.login }}</p>
+        </div>
+        <nav>
+            <a href="/tape/{{ user.user_id }}">Лента</a>
+            <a href="/basket/{{ user.user_id }}">Корзина</a>
+            <a href="/orders/{{ user.user_id }}">Заказы</a>
+            <a href="/profile/{{ user.user_id }}">Профиль</a>
+        </nav>
+    </header>
+
+    <!-- ЛЕНТА МАГАЗИНА -->
+    <ul class="container">
+        {% for product in products %}
+            <div class="product-card">
+                <div class="product-image"><img src="{{ product.image }}"
+                                                alt="Картинка не загруженна"
+                                                width="150px"
+                                                height="200px"></div>
+                <h3>{{ product.name }}</h3>
+                <p>Количество: {{ product.quantity }}</p>
+                <p class="price">Цена: {{ product.cost }}</p>
+                <form action="/item/{{ product.product_id }}" method="post">
+                    <input type="submit" value="Описание">
+                </form>
+                <form action="/item/{{ product.product_id }}/insert/{{ user.user_id }}" method="post">
+                    <input type="submit" value="В корзину">
+                </form>
+            </div>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>

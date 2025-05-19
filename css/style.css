@@ -1,0 +1,18 @@
+/* #cf8551 - основной задний фон и цвет текста */
+/* #522708 - борт блоков */
+/* #823803 - задний фон блоков */
+/* #dda780 - цвет текста при наведение на него */
+
+* {
+    font-family: “Comic Sans MS”, “Comic Sans”, cursive;
+    box-sizing: border-box;
+    font-size: 24px;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: “Comic Sans MS”, “Comic Sans”, cursive;
+    background-color: #cf8551;
+    color: #cf8551;
+}

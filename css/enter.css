@@ -1,0 +1,55 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    border-radius: 10px;
+    border: 5px solid #522708;
+    margin-top: 20px;
+    background-color: #823803;
+}
+
+input {
+    padding: 5px;
+    margin: 10px;
+}
+
+input[type="text"] {
+    font-family: “Comic Sans MS”, “Comic Sans”, cursive;
+    background-color: #ffe3ce;
+    color: #cf8551;
+    border-radius: 10px;
+    width: 35%;
+}
+
+input[type="submit"] {
+    font-family: “Comic Sans MS”, “Comic Sans”, cursive;
+    background-color: #522708;
+    color: #cf8551;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #dda780;
+}
+
+input[type="submit"]:active {
+    transform: scale(0.95);
+}
+
+input[value="Регистрация"] {
+    width: 50%;;
+}
+
+input[value="Войти"] {
+    width: 20%;
+}
