@@ -49,33 +49,40 @@ h1 {
 
 
 
-.basket {
-    display: flex;
-    flex-direction: column;
+.list-orders {
     margin-top: 100px;
     margin-bottom: 100px;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 20%;
+    margin-right: 20%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     background-color: #823803;
     border: 5px solid #522708;
-    border-radius: 10px;
+    border-radius: 10px
 }
 
-.basket-div {
-    margin: 10px;
-    padding: 8px;
+.list-orders > div {
+    width: 100%;
+}
+
+.list-orders-ul-ul{
     display: flex;
-    flex-direction: row;
-    border-bottom: 5px solid #522708;
 }
 
-.basket-div-p-1 {
-    width: 24%;
+.list-orders-li-1{
+    list-style: none;
+    margin: 8px;
+    padding: 2px;
     text-aling: center;
+    width: 24%;
 }
 
-.basket-div-p {
-    border-left: 5px solid #522708;
+.list-orders-li{
+    list-style: none;
+    margin: 8px;
+    padding: 2px;
+    text-aling: center;
     width: 24%;
-    text-align: center;
+    border-left: 5px solid #522708;
 }

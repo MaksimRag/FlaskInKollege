@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Доставка еды ;%!?:*;!</title>
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/basket.css">
+    <link rel="stylesheet" href="../css/orders.css">
 </head>
 <body>
 
@@ -29,19 +29,24 @@
         </nav>
     </header>
 
-    <div class="basket">
-        <h1>Корзина</h1>
-        <ul>
-            {% for product in get_basket %}
-                <div class="basket-div">
-                    <p class="basket-div-p-1">Продукт: {{ product.name }}</p>
-                    <p class="basket-div-p">Цена: {{ product.cost }} руб</p>
-                    <p class="basket-div-p">Количество: {{ product.quantity }}</p>
-                    <p class="basket-div-p">Сумма: {{ product.total_price_item }} руб</p>
+    <div class="list-orders">
+        <div>
+            <h1>Заказы</h1>
+            <ul>
+                {% for order in orders %}
+                <div>
+                    <ul class="list-orders-ul-ul">
+                        <li class="list-orders-li-1">Номер заказа: {{ order.order_id }}</li>
+                        <li class="list-orders-li">Адрес доставки: {{ order.address }}</li>
+                        <li class="list-orders-li">Итоговая стоимость: {{ order.total_cost }}</li>
+                        <li class="list-orders-li">Статус: {{ order.status }}</li>
+                    </ul>
                 </div>
-            {% endfor %}
-        </ul>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
+
 
 </body>
 </html>

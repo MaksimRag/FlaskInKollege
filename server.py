@@ -36,9 +36,25 @@ def tape(value = 0):
     return redirect(url_for("main", value=value))
 
 @app.route("/basket")
-@app.route("/basket/<value>")
-def basket(value = 0):
-    return render_template("basket.html")
+@app.route("/basket/<user_id>")
+def basket(user_id = 0):
+    query = f""" SELECT
+	                 user_id,
+	                 product.name,
+	                 product.cost,
+	                 basket.quantity,
+	                 (product.cost * basket.quantity) AS total_price_item
+                 FROM
+	                 "Baskets" basket
+	                 INNER JOIN "Products" product USING(product_id)
+                 WHERE user_id = {user_id} """
+    get_basket = request_select(query=query)
+
+    query = f""" SELECT * FROM "Users" 
+                 WHERE user_id = {user_id} """
+    user = request_select(query=query)
+
+    return render_template("basket.html", user=user, get_basket=get_basket)
 
 @app.route("/profile")
 @app.route("/profile/<value>")
@@ -71,18 +87,76 @@ def profile(value = 0):
 def exit_user(value = 0):
     return redirect(url_for("main"))
 
-@app.route("/item/<value>",  methods=["POST"])
-def item(value = 0):
-    print(value)
-    query = f""" SELECT * FROM "Products"
-                 WHERE product_id = {value} """
-    product = request_select(query=query)
-    return f"{product}"
-
 @app.route("/enter")
 def enter():
     return render_template("enter.html")
 
+
+@app.route("/item/<product_id>/<user_id>", methods=["POST"])
+def item(product_id, user_id = 0):
+    query = f""" SELECT * FROM "Products"
+                 WHERE product_id = {product_id} """
+    product = request_select(query=query)[0]
+
+    query = f""" SELECT * FROM "Users" 
+                 WHERE user_id = {user_id} """
+    user = request_select(query=query)[0]
+
+    role = 0
+    if user:
+        role = user["role_id"]
+
+    if role == 1:
+        return render_template("item_description_admin.html", user=user, product=product)
+    elif role == 2:
+        return render_template("item_description_user.html", product=product)
+    elif role == 0:
+        return render_template("item_description.html", product=product)
+
+@app.route("/item/<product_id>/insert/<user_id>", methods=["POST"])
+def item_insert(product_id, user_id):
+    query = f""" SELECT * FROM "Baskets"
+                 WHERE product_id = {product_id} and user_id = {user_id} """
+    get_basket = request_select(query=query)
+
+    if get_basket:
+        query = f""" UPDATE "Baskets"
+                     SET quantity = quantity + 1
+                     WHERE product_id = {product_id} and user_id = {user_id} """
+        request_update(query=query)
+
+    else:
+        query = f""" INSERT INTO "Baskets"(user_id, product_id, quantity)
+                     VALUES ({user_id}, {product_id}, 1)"""
+        request_insert(query=query)
+
+    return redirect(url_for("main", value=user_id))
+
+
+@app.route("/orders/<value>")
+def get_orders(value = 0):
+    query = f""" SELECT * FROM "Users"
+                 WHERE user_id = {value}"""
+    user = request_select(query=query)
+
+    role = 0
+    if user:
+        user = user[0]
+        role = user["role_id"]
+
+    if role == 1:
+        query = f""" SELECT * FROM "Orders" """
+        orders = request_select(query=query)
+        return render_template("orders_admin.html", user=user, orders=orders)
+
+    elif role == 2:
+        query = f""" SELECT * FROM "Orders"
+                     WHERE user_id = {value}"""
+        orders = request_select(query=query)
+        return render_template("orders_user.html", user=user, orders=orders)
+
+    elif role == 0:
+        return redirect(url_for("main"))
 
 @app.route("/order/edit", methods=["POST"])
 def order_edit():
@@ -92,9 +166,7 @@ def order_edit():
                  WHERE order_id = {order_id} """
     order = request_select(query=query)
 
-    print(order)
-
-    return redirect(url_for("main"))
+    return order
 
 
 ### РУТЫ ВХОДА И РЕГИСТРАЦИИ ПОЛЬЗОВАТЕЛЯ ###

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доставка еды ;%!?:*;!</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/item_description.css">
+</head>
+<body>
+
+    <!-- НАВИГАЦИЯ -->
+    <header>
+        <div>
+            <img src="../images/logo.jpg"
+                 alt=""
+                 height="60"
+                 width="60">
+            <p>Доставка Еды</p>
+        </div>
+        <div class="name-item">
+            <p>{{ product.name }}</p>
+        </div>
+        <nav>
+            <a href="/tape">Лента</a>
+            <a href="/basket">Корзина</a>
+            <a href="/enter">Войти</a>
+        </nav>
+    </header>
+
+
+    <div class="item-description">
+        <div class="item-description-main-div">
+            <h1>Описание</h1>
+            <div class="item-description-div1">
+                <div>
+                    <img class="item-description-img"
+                         src="{{ product.image }}"
+                         alt=""
+                         height="400"
+                         width="300">
+                </div>
+                <div class="item-description-div2">
+                    <p>Название: {{ product.name }}</p>
+                    <p>Вес: {{ product.grams }} грамм</p>
+                    <p>Каллории: {{ product.calories }} кл</p>
+                    <p>Описание: {{ product.description }}</p>
+                    <p class="price">Цена: {{ product.cost }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
