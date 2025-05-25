@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доставка еды ;%!?:*;!</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/basket.css">
+</head>
+<body>
+
+    <!-- НАВИГАЦИЯ -->
+    <header>
+        <div>
+            <img src="../images/logo.jpg"
+                 alt=""
+                 height="60"
+                 width="60">
+            <p>Доставка Еды</p>
+        </div>
+        <div>
+            <p>{{ user.login }}</p>
+        </div>
+        <nav>
+            <a href="/tape/{{ user.user_id }}">Лента</a>
+            <a href="/basket/{{ user.user_id }}">Корзина</a>
+            <a href="/orders/{{ user.user_id }}">Заказы</a>
+            <a href="/profile/{{ user.user_id }}">Профиль</a>
+        </nav>
+    </header>
+
+    <!-- КОРЗИНА -->
+    <div class="basket">
+        <h1>Корзина</h1>
+        <ul>
+            {% for product in get_basket %}
+                <div class="basket-div">
+                    <p class="basket-div-p-1">Продукт: {{ product.name }}</p>
+                    <p class="basket-div-p">Цена: {{ product.cost }} руб</p>
+                    <p class="basket-div-p">Количество: {{ product.quantity }}</p>
+                    <p class="basket-div-p">Сумма: {{ product.total_price_item }} руб</p>
+                </div>
+            {% endfor %}
+        </ul>
+        <h1 class="h1-none-bb">Итоговая стоимость: {{ get_basket[0].all_price_item }}</h1>
+    </div>
+
+    <!-- КНОПКИ -->
+    <div class="action">
+        <h1>Действия</h1>
+        <div>
+            <form action="/order/arrange/{{ user.user_id }}" method="post">
+                <input type="submit" value="Оформить заказ">
+            </form>
+            <form action="/basket/clear/{{ user.user_id }}" method="post">
+                <input type="submit" value="Очистить корзину">
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>

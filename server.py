@@ -35,18 +35,20 @@ def main(value = 0):
 def tape(value = 0):
     return redirect(url_for("main", value=value))
 
+
 @app.route("/basket")
 @app.route("/basket/<user_id>")
 def basket(user_id = 0):
     query = f""" SELECT
-	                 user_id,
-	                 product.name,
-	                 product.cost,
-	                 basket.quantity,
-	                 (product.cost * basket.quantity) AS total_price_item
+                     user_id,
+                     product.name,
+                     product.cost,
+                     basket.quantity,
+                     (product.cost * basket.quantity) AS total_price_item,
+                     SUM((product.cost * basket.quantity)) OVER () AS all_price_item
                  FROM
-	                 "Baskets" basket
-	                 INNER JOIN "Products" product USING(product_id)
+                     "Baskets" basket
+                     INNER JOIN "Products" product USING(product_id)
                  WHERE user_id = {user_id} """
     get_basket = request_select(query=query)
 
@@ -54,7 +56,23 @@ def basket(user_id = 0):
                  WHERE user_id = {user_id} """
     user = request_select(query=query)
 
-    return render_template("basket.html", user=user, get_basket=get_basket)
+    if user:
+        if get_basket:
+            return render_template("basket_user.html", user=user[0], get_basket=get_basket)
+        else:
+            return render_template("basket_none.html", user=user[0])
+
+    return render_template("basket.html", user=user)
+
+@app.route("/basket/clear/<user_id>", methods=["POST"])
+def order_arrange(user_id):
+    query = f""" DELETE FROM "Baskets"
+                 WHERE user_id = {user_id} """
+    request_update(query=query)
+
+    return redirect(url_for("basket", user_id=user_id))
+
+
 
 @app.route("/profile")
 @app.route("/profile/<value>")
@@ -92,24 +110,29 @@ def enter():
     return render_template("enter.html")
 
 
-@app.route("/item/<product_id>/<user_id>", methods=["POST"])
+@app.route("/item/<product_id>/description/<user_id>", methods=["POST"])
 def item(product_id, user_id = 0):
     query = f""" SELECT * FROM "Products"
-                 WHERE product_id = {product_id} """
+                     WHERE product_id = {product_id} """
     product = request_select(query=query)[0]
 
     query = f""" SELECT * FROM "Users" 
-                 WHERE user_id = {user_id} """
-    user = request_select(query=query)[0]
+                     WHERE user_id = {user_id} """
+    user = request_select(query=query)
+
+    print(user)
+    print(product)
 
     role = 0
     if user:
+        user = user[0]
         role = user["role_id"]
 
+    print(role)
     if role == 1:
         return render_template("item_description_admin.html", user=user, product=product)
     elif role == 2:
-        return render_template("item_description_user.html", product=product)
+        return render_template("item_description_user.html", user=user, product=product)
     elif role == 0:
         return render_template("item_description.html", product=product)
 
@@ -133,10 +156,10 @@ def item_insert(product_id, user_id):
     return redirect(url_for("main", value=user_id))
 
 
-@app.route("/orders/<value>")
-def get_orders(value = 0):
+@app.route("/orders/<user_id>")
+def get_orders(user_id = 0):
     query = f""" SELECT * FROM "Users"
-                 WHERE user_id = {value}"""
+                 WHERE user_id = {user_id}"""
     user = request_select(query=query)
 
     role = 0
@@ -151,14 +174,14 @@ def get_orders(value = 0):
 
     elif role == 2:
         query = f""" SELECT * FROM "Orders"
-                     WHERE user_id = {value}"""
+                     WHERE user_id = {user_id}"""
         orders = request_select(query=query)
         return render_template("orders_user.html", user=user, orders=orders)
 
     elif role == 0:
         return redirect(url_for("main"))
 
-@app.route("/order/edit", methods=["POST"])
+@app.route("/order/edit/", methods=["POST"])
 def order_edit():
     order_id = request.form["order_id"]
 
@@ -168,6 +191,53 @@ def order_edit():
 
     return order
 
+@app.route("/order/arrange/<user_id>", methods=["POST"])
+def order_arr(user_id):
+    query = f""" SELECT
+                         user_id,
+                         product.name,
+                         product.cost,
+                         basket.quantity,
+                         (product.cost * basket.quantity) AS total_price_item,
+                         SUM((product.cost * basket.quantity)) OVER () AS all_price_item
+                     FROM
+                         "Baskets" basket
+                         INNER JOIN "Products" product USING(product_id)
+                     WHERE user_id = {user_id} """
+    get_basket = request_select(query=query)
+
+    query = f""" SELECT * FROM "Users"
+                     WHERE user_id = {user_id}"""
+    user = request_select(query=query)[0]
+
+    return render_template("order_create.html", user=user, get_basket=get_basket)
+
+@app.route("/order/create/<user_id>", methods=["POST"])
+def oreder_create(user_id):
+    address = request.form["address"]
+    status = "В обработке"
+
+    query = f""" SELECT
+                     SUM((product.cost * basket.quantity)) OVER () AS all_price_item
+                 FROM
+                     "Baskets" basket
+                     INNER JOIN "Products" product USING(product_id)
+                 WHERE user_id = {user_id} """
+    total_price = request_select(query=query)[0]
+    total_price = int(total_price["all_price_item"])
+
+    query = f""" SELECT * FROM "Users"
+                 WHERE user_id = {user_id} """
+    user = request_select(query=query)[0]
+
+    phone = user["user_id"]
+
+    query = f""" INSERT INTO "Orders"(user_id, address, status, total_price, phone)
+                 VALUES ({user_id}, '{address}', '{status}', {total_price}, '{phone}') """
+    request_insert(query=query)
+
+    print(1)
+    return redirect(url_for("get_orders", user_id=user_id))
 
 ### РУТЫ ВХОДА И РЕГИСТРАЦИИ ПОЛЬЗОВАТЕЛЯ ###
 
@@ -298,4 +368,4 @@ def request_update(query):
             connection.close()
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

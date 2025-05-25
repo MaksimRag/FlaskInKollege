@@ -39,7 +39,7 @@
                 <h3>{{ product.name }}</h3>
                 <p>Количество: {{ product.quantity }}</p>
                 <p class="price">Цена: {{ product.cost }}</p>
-                <form action="/item/{{ product.product_id }}" method="post">
+                <form action="/item/{{ product.product_id }}/description/0" method="post">
                     <input type="submit" value="Описание">
                 </form>
             </div>

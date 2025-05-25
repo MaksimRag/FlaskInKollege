@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Доставка еды ;%!?:*;!</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='../css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='../css/item_description.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='../css/order_create.css') }}">
     <base href="http://127.0.0.1:5000/">
 </head>
 <body>
@@ -30,27 +30,20 @@
         </nav>
     </header>
 
-    <div class="item-description">
-        <div class="item-description-main-div">
-            <h1>Описание</h1>
-            <div class="item-description-div1">
-                <div>
-                    <img class="item-description-img"
-                         src="{{ product.image }}"
-                         alt=""
-                         height="400"
-                         width="300">
-                </div>
-                <div class="item-description-div2">
-                    <p>Название: {{ product.name }}</p>
-                    <p>Вес: {{ product.grams }} грамм</p>
-                    <p>Каллории: {{ product.calories }} кл</p>
-                    <p>Описание: {{ product.description }}</p>
-                    <p class="price">Цена: {{ product.cost }}</p>
-                </div>
-            </div>
+
+    <div class="order-create">
+        <div>
+            <h1>Оформление заказа</h1>
+        </div>
+        <div>
+            <form action="/order/create/{{ user.user_id }}" method="post">
+                <p>Стоимость к оплате: {{ get_basket[0].all_price_item }}</p>
+                <input name="address" type="text" placeholder="Введите адрес доставки">
+                <input type="submit" value="Оплатить">
+            </form>
         </div>
     </div>
+
 
 </body>
 </html>

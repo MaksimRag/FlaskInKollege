@@ -19,12 +19,13 @@
             <p>Доставка Еды</p>
         </div>
         <div>
-            <p>Чтобы заказать - войдите</p>
+            <p>{{ user.login }}</p>
         </div>
         <nav>
-            <a href="/tape">Лента</a>
-            <a href="/basket">Корзина</a>
-            <a href="/enter">Войти</a>
+            <a href="/tape/{{ user.user_id }}">Лента</a>
+            <a href="/basket/{{ user.user_id }}">Корзина</a>
+            <a href="/orders/{{ user.user_id }}">Заказы</a>
+            <a href="/profile/{{ user.user_id }}">Профиль</a>
         </nav>
     </header>
 

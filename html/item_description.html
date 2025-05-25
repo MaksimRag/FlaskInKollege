@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Доставка еды ;%!?:*;!</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/item_description.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='../css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='../css/item_description.css') }}">
+    <base href="http://127.0.0.1:5000/">
 </head>
 <body>
 
@@ -18,8 +19,8 @@
                  width="60">
             <p>Доставка Еды</p>
         </div>
-        <div class="name-item">
-            <p>{{ product.name }}</p>
+        <div>
+            <p>Чтобы заказать - войдите</p>
         </div>
         <nav>
             <a href="/tape">Лента</a>

@@ -49,60 +49,40 @@ h1 {
 
 
 
-.basket {
+.order-create {
     display: flex;
     flex-direction: column;
     margin-top: 100px;
     margin-bottom: 50px;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 30%;
+    margin-right: 30%;
     background-color: #823803;
     border: 5px solid #522708;
     border-radius: 10px;
 }
 
-.basket-div {
-    margin: 10px;
-    padding: 8px;
-    display: flex;
-    flex-direction: row;
-    border-bottom: 5px solid #522708;
-}
-
-.basket-div-p-1 {
-    width: 24%;
-    text-aling: center;
-}
-
-.basket-div-p {
-    border-left: 5px solid #522708;
-    width: 24%;
-    text-align: center;
-}
-
-.action {
+.order-create > div > form {
     display: flex;
     flex-direction: column;
-    margin-bottom: 100px;
-    margin-left: 25%;
-    margin-right: 25%;
-    background-color: #823803;
-    border: 5px solid #522708;
-    border-radius: 10px;
+    align-items: center;
 }
 
-.action > div {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding: 10px;
+.order-create > div > form > p {
+    margin-top: 10px;
 }
 
 
 input {
-    margin-left: 50px;
-    margin-right: 50px;
+    margin: 10px;
     padding: 5px;
+    width: 80%;
+}
+
+input[type="text"] {
+    font-family: “Comic Sans MS”, “Comic Sans”, cursive;
+    background-color: #ffe3ce;
+    color: #cf8551;
+    border-radius: 10px;
 }
 
 input[type="submit"] {
@@ -122,26 +102,6 @@ input[type="submit"]:active {
     transform: scale(0.95);
 }
 
-
-
-
-.basket-none {
-    display: flex;
-    flex-direction: column;
-    margin-top: 100px;
-    margin-bottom: 50px;
-    margin-left: 30%;
-    margin-right: 30%;
-    background-color: #823803;
-    border: 5px solid #522708;
-    border-radius: 10px;
+input[value="Оплатить"] {
 }
 
-.h1-none-bb {
-    font-size: 30px;
-    text-align: center;
-    border-bottom: 0px;
-    margin-top: 10px;
-    padding: 10px;
-    width: 100%;
-}
